@@ -109,7 +109,6 @@ function operationsHandler(e) {
                 break;
                 } else {
                     let result = +inputField.value;
-
                     switch (previousOperation) {
                         case "+":
                             result += previousNumber;
@@ -129,6 +128,7 @@ function operationsHandler(e) {
                 }
                 
             default:
+                equalsPushed = false;
                 countEquals = 0;
                 op.push(e.target.dataset.value);
                 num.push(+inputField.value);
