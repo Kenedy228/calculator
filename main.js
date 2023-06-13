@@ -47,16 +47,14 @@ operations.forEach(operation => {
 })
 
 function numbersHandler(e) {
-    if (equalsPushed) {
+    if (equalsPushed) clearData();
+    
+    if (inputField.value != "0") {
+        inputField.value += e.target.textContent;
+    } else if (inputField.value == "0" && e.target.textContent != "0") {
         inputField.value = "";
-        num.splice(0);
-        op.splice(0);
-        countEquals = 0;
-        previousNumber = 0;
-        previousOperation = "";
-        equalsPushed = false;
+        inputField.value += e.target.textContent;
     }
-    inputField.value += e.target.textContent;
 }
 
 function operationsHandler(e) {
@@ -72,12 +70,7 @@ function operationsHandler(e) {
                 if (inputField.value.indexOf(".") == -1) inputField.value += ".";
                 break;
             case "AC":
-                inputField.value = "";
-                num.splice(0);
-                op.splice(0);
-                countEquals = 0;
-                previousNumber = 0;
-                previousOperation = "";
+                clearData();
                 break;
             case "=":
                 equalsPushed = true;
@@ -103,7 +96,7 @@ function operationsHandler(e) {
                 inputField.value = result;
                 previousNumber = num[num.length - 1];
                 previousOperation = op[op.length - 1];
-                num.splice(0, num.length);
+                num.splice(0);
                 op.splice(0);
                 countEquals++
                 break;
@@ -142,22 +135,25 @@ function operationsHandler(e) {
 inputField.addEventListener("keydown", (e) => {
     e.preventDefault();
     if (equalsPushed) {
-        inputField.value = "";
-        num.splice(0);
-        op.splice(0);
-        countEquals = 0;
-        previousNumber = 0;
-        previousOperation = "";
-        equalsPushed = false;
+        clearData();
     }
-    if (48 <= e.keyCode && e.keyCode <= 57) {
+    if (48 <= e.keyCode && e.keyCode <= 57 && inputField.value != "0") {
         inputField.value += e.key;
     } else if (e.keyCode == 190 && inputField.value.indexOf(".") == -1 && inputField.value.length > 0) {
         inputField.value += e.key;
-    }
-
-    if (inputField.value.indexOf(" ") != -1) {
+    } else if (inputField.value == "0" && e.keyCode != 48) {
         inputField.value = "";
+        inputField.value += e.key;
     }
 
 })
+
+function clearData() {
+    inputField.value = "";
+    num.splice(0);
+    op.splice(0);
+    countEquals = 0;
+    previousNumber = 0;
+    previousOperation = "";
+    equalsPushed = false;
+}
