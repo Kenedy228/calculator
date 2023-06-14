@@ -42,7 +42,7 @@ numbers.forEach(number => {
 operations.forEach(operation => {
     operation.addEventListener("click", (e) => {
         e.preventDefault();
-        operationsHandler(e);
+        operationsHandler(e.target.dataset.value);
     })
 })
 
@@ -57,9 +57,9 @@ function numbersHandler(e) {
     }
 }
 
-function operationsHandler(e) {
+function operationsHandler(operation) {
     if (inputField.value.length > 0) {
-        switch (e.target.dataset.value) {
+        switch (operation) {
             case "+/-": 
                 inputField.value = +inputField.value * -1;
                 break;
@@ -123,7 +123,7 @@ function operationsHandler(e) {
             default:
                 equalsPushed = false;
                 countEquals = 0;
-                op.push(e.target.dataset.value);
+                op.push(operation);
                 num.push(+inputField.value);
                 inputField.value = "";
                 break;
@@ -134,18 +134,21 @@ function operationsHandler(e) {
 
 inputField.addEventListener("keydown", (e) => {
     e.preventDefault();
-    if (equalsPushed) {
-        clearData();
-    }
-    if (48 <= e.keyCode && e.keyCode <= 57 && inputField.value != "0") {
+    console.log(e);
+    if ("123456789".indexOf(e.key) != -1 && inputField.value != "0") {
         inputField.value += e.key;
-    } else if (e.keyCode == 190 && inputField.value.indexOf(".") == -1 && inputField.value.length > 0) {
+    } else if (e.key == "." && inputField.value.indexOf(".") == -1 && inputField.value.length > 0) {
         inputField.value += e.key;
-    } else if (inputField.value == "0" && e.keyCode != 48) {
+    } else if (inputField.value == "0" && e.key != "0") {
         inputField.value = "";
         inputField.value += e.key;
+    } else if (inputField.value.length > 0 && e.key == "Backspace") {
+        inputField.value = inputField.value.substring(0, inputField.value.length - 1);
+    } else if (inputField.value.length > 0 && "*/+-".indexOf(e.key) != -1) {
+        operationsHandler(e.key);
+    } else if (inputField.value.length > 0 && e.key == "Enter") {
+        operationsHandler("=");
     }
-
 })
 
 function clearData() {
