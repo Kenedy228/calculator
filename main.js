@@ -135,7 +135,7 @@ function operationsHandler(operation) {
 inputField.addEventListener("keydown", (e) => {
     e.preventDefault();
     console.log(e);
-    if ("123456789".indexOf(e.key) != -1 && inputField.value != "0") {
+    if ("0123456789".indexOf(e.key) != -1 && inputField.value != "0") {
         inputField.value += e.key;
     } else if (e.key == "." && inputField.value.indexOf(".") == -1 && inputField.value.length > 0) {
         inputField.value += e.key;
