@@ -139,7 +139,7 @@ inputField.addEventListener("keydown", (e) => {
         inputField.value += e.key;
     } else if (e.key == "." && inputField.value.indexOf(".") == -1 && inputField.value.length > 0) {
         inputField.value += e.key;
-    } else if (inputField.value == "0" && e.key != "0") {
+    } else if (inputField.value == "0" && e.key != "0" && "0123456789".indexOf(e.key) != -1) {
         inputField.value = "";
         inputField.value += e.key;
     } else if (inputField.value.length > 0 && e.key == "Backspace") {
